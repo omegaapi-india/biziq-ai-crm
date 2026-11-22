@@ -1,0 +1,3 @@
+DEMO_TRIAL_SECRET=replace-with-a-long-random-string
+ADMIN_SESSION_SECRET=replace-with-another-long-random-string
+ADMIN_PASSWORD_SECRET=replace-with-a-third-long-random-string

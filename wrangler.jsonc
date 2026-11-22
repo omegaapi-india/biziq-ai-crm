@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "biziq",
+  "compatibility_date": "2026-11-22",
+  "pages_build_output_dir": ".",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "biziq-crm",
+      "database_id": "91a1d9ce-df35-45f5-8c6d-53614dd3f82d"
+    }
+  ]
+}

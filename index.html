@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Krishna Prakash Ojha (Leon) — OmegaAPI">
+  <meta name="description" content="BizIQ is an open-source AI lead CRM with automatic capture, adaptive scoring, a self-recording bot, business calculators, local Ollama support, and optional BYOK cloud models.">
+  <meta name="theme-color" content="#0b1220">
+  <title>BizIQ — AI Lead CRM by OmegaAPI</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="BizIQ home">
+      <span class="brand-mark">BQ</span>
+      <span class="brand-name">BizIQ<small>by OmegaAPI</small></span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#capture">Lead capture</a>
+      <a href="#calculators">Calculators</a>
+      <a href="#workspace">Workspace</a>
+      <a href="#about">About</a>
+    </nav>
+    <a class="header-cta" href="#workspace">Open CRM</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Open source · Self host for ₹0 · No paid AI required</span>
+        <h1>Every enquiry becomes a <span>qualified lead</span> — automatically.</h1>
+        <p class="lead">BizIQ reads a pasted message, extracts the useful fields, scores intent with transparent rules, writes a bot activity record, and keeps learning from your won and lost outcomes. Add a local open model or bring your own cloud key only if you want to.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#capture">Try lead capture</a>
+          <a class="button ghost" href="#workspace">Open workspace</a>
+        </div>
+        <ul class="hero-points">
+          <li>No card, no subscription</li>
+          <li>Local Ollama bridge included</li>
+          <li>Cloud models are opt-in BYOK</li>
+        </ul>
+      </div>
+      <div class="hero-card" aria-label="Preview of lead scoring">
+        <div class="mini-top">
+          <span class="dot green"></span>
+          <span>Bot pipeline · live rules</span>
+          <span class="mini-tag">demo</span>
+        </div>
+        <div class="mini-lead">
+          <div class="mini-avatar">RK</div>
+          <div>
+            <strong>Rohan Kumar</strong>
+            <small>Need pricing for 40 seats · this week</small>
+          </div>
+          <span class="score-pill">86</span>
+        </div>
+        <div class="mini-bars">
+          <div><span>Budget</span><i class="w88"></i></div>
+          <div><span>Urgency</span><i class="w76"></i></div>
+          <div><span>Decision</span><i class="w64"></i></div>
+        </div>
+        <div class="mini-action">
+          <span class="bot-chip">bot</span>
+          Next action: Call today with pricing options
+        </div>
+        <div class="mini-foot">
+          <span>Rules engine · offline</span>
+          <span>Activity recorded ✓</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="strip" aria-label="Product highlights">
+      <div><strong>Auto capture</strong><span>Name, business, intent from raw text</span></div>
+      <div><strong>Self learning</strong><span>Weights adjust after each outcome</span></div>
+      <div><strong>Bot recorder</strong><span>Every change gets a timeline entry</span></div>
+      <div><strong>Model neutral</strong><span>Rules, Ollama, or any BYOK endpoint</span></div>
+    </section>
+
+    <section id="capture" class="section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">01 · Capture bot</span>
+          <h2>Paste an enquiry. Get a structured lead.</h2>
+        </div>
+        <p>No sign-in needed for this demo. The message is stored in your own instance's D1 database with contact details redacted in the saved note.</p>
+      </div>
+      <div class="capture-grid">
+        <form id="capture-form" class="panel form-panel">
+          <label for="capture-message">Enquiry message</label>
+          <textarea id="capture-message" name="message" rows="8" required placeholder="Hi, my name is Rohan Kumar from Netra Studio. We need pricing for 40 seats this week. My email is rohan@example.com and we have a budget of ₹2 lakh."></textarea>
+          <div class="field-row">
+            <div>
+              <label for="capture-source">Source</label>
+              <select id="capture-source" name="source">
+                <option value="website">Website form</option>
+                <option value="email">Email inbox</option>
+                <option value="chat">Landing page chat</option>
+                <option value="manual">Manual paste</option>
+              </select>
+            </div>
+            <div class="honeypot" aria-hidden="true">
+              <label for="capture-website">Website</label>
+              <input id="capture-website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+          </div>
+          <input id="capture-started" type="hidden">
+          <button class="button primary wide" type="submit" id="capture-button">Capture lead</button>
+          <p class="fine-print">Demo data only. Do not paste real customer secrets.</p>
+        </form>
+        <div class="panel result-panel" id="capture-result" hidden>
+          <div class="result-head">
+            <span class="eyebrow">Captured lead</span>
+            <span class="score-ring" id="result-score">0</span>
+          </div>
+          <h3 id="result-name">—</h3>
+          <p id="result-business" class="muted">—</p>
+          <div class="result-grid">
+            <div><span>Intent</span><strong id="result-intent">—</strong></div>
+            <div><span>Source</span><strong id="result-source">—</strong></div>
+            <div><span>Model</span><strong id="result-model">—</strong></div>
+            <div><span>Lead ID</span><strong id="result-id">—</strong></div>
+          </div>
+          <div class="next-box">
+            <span class="bot-chip">bot</span>
+            <p id="result-action">—</p>
+          </div>
+          <p class="fine-print" id="result-note">Saved to D1 with an activity record.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculators" class="section soft">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">02 · Business calculators</span>
+          <h2>Small math. Better decisions.</h2>
+        </div>
+        <p>Four deterministic calculators for pricing, pipeline, and margin planning. Results update as you type and never leave the browser.</p>
+      </div>
+      <div class="calc-grid">
+        <article class="panel calc-card">
+          <h3>Lead value</h3>
+          <p>How much is one lead worth, and how many do you need?</p>
+          <div class="calc-inputs">
+            <label>Monthly target (₹)<input type="number" id="lv-target" value="500000" min="0" step="1000"></label>
+            <label>Avg deal value (₹)<input type="number" id="lv-deal" value="50000" min="0" step="1000"></label>
+            <label>Close rate (%)<input type="number" id="lv-rate" value="20" min="0.1" max="100" step="0.5"></label>
+          </div>
+          <div class="calc-output"><span>Value per lead</span><strong id="lv-value">—</strong></div>
+          <div class="calc-output subtle"><span>Leads needed / month</span><strong id="lv-needed">—</strong></div>
+        </article>
+
+        <article class="panel calc-card">
+          <h3>Break-even units</h3>
+          <p>Find the sales volume that covers fixed and variable costs.</p>
+          <div class="calc-inputs">
+            <label>Fixed cost (₹)<input type="number" id="be-fixed" value="150000" min="0" step="1000"></label>
+            <label>Sale price (₹)<input type="number" id="be-price" value="2500" min="1" step="50"></label>
+            <label>Variable cost (₹)<input type="number" id="be-cost" value="1000" min="0" step="50"></label>
+          </div>
+          <div class="calc-output"><span>Break-even units</span><strong id="be-units">—</strong></div>
+          <div class="calc-output subtle"><span>Contribution / unit</span><strong id="be-contribution">—</strong></div>
+        </article>
+
+        <article class="panel calc-card">
+          <h3>Margin &amp; markup</h3>
+          <p>Check how a price change affects your gross margin.</p>
+          <div class="calc-inputs">
+            <label>Cost (₹)<input type="number" id="mm-cost" value="800" min="0" step="10"></label>
+            <label>Sale price (₹)<input type="number" id="mm-price" value="1200" min="0" step="10"></label>
+          </div>
+          <div class="calc-output"><span>Gross margin</span><strong id="mm-margin">—</strong></div>
+          <div class="calc-output subtle"><span>Markup on cost</span><strong id="mm-markup">—</strong></div>
+        </article>
+
+        <article class="panel calc-card">
+          <h3>Campaign ROI</h3>
+          <p>See the return from a marketing or hiring experiment.</p>
+          <div class="calc-inputs">
+            <label>Amount spent (₹)<input type="number" id="roi-spend" value="25000" min="0" step="500"></label>
+            <label>Value gained (₹)<input type="number" id="roi-gain" value="90000" min="0" step="500"></label>
+          </div>
+          <div class="calc-output"><span>ROI</span><strong id="roi-value">—</strong></div>
+          <div class="calc-output subtle"><span>Net gain</span><strong id="roi-net">—</strong></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="workspace" class="section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">03 · CRM workspace</span>
+          <h2>Your lead pipeline, with a bot that never forgets.</h2>
+        </div>
+        <p>Sign in with the demo admin password to view captured leads, review the bot timeline, mark outcomes, and test model adapters.</p>
+      </div>
+
+      <div id="login-panel" class="panel login-panel">
+        <div class="login-icon">BQ</div>
+        <h3>Admin sign-in</h3>
+        <p class="muted">Owner access for the demo workspace. No email, no phone, no profile.</p>
+        <form id="login-form">
+          <label for="login-password">Demo admin password</label>
+          <input id="login-password" type="password" autocomplete="current-password" required placeholder="Enter admin password">
+          <button class="button primary wide" type="submit">Unlock workspace</button>
+        </form>
+        <p class="fine-print" id="login-status">Session stays signed in for 7 days.</p>
+      </div>
+
+      <div id="workspace-panel" class="workspace" hidden>
+        <div class="workspace-bar">
+          <div>
+            <strong>CRM workspace</strong>
+            <span id="workspace-mode">Rules engine · adaptive scoring</span>
+          </div>
+          <button class="button small ghost" type="button" id="logout-button">Sign out</button>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Workspace sections">
+          <button class="tab active" type="button" data-tab="overview" role="tab">Overview</button>
+          <button class="tab" type="button" data-tab="leads" role="tab">Leads</button>
+          <button class="tab" type="button" data-tab="activity" role="tab">Bot activity</button>
+          <button class="tab" type="button" data-tab="models" role="tab">AI Studio</button>
+        </div>
+
+        <div id="tab-overview" class="tab-panel">
+          <div class="stat-grid">
+            <div class="panel stat-card"><span>Total leads</span><strong id="stat-total">0</strong><small>saved in D1</small></div>
+            <div class="panel stat-card"><span>Average score</span><strong id="stat-score">0</strong><small>adaptive rating</small></div>
+            <div class="panel stat-card"><span>Wins</span><strong id="stat-wins">0</strong><small>closed outcomes</small></div>
+            <div class="panel stat-card"><span>Recorded value</span><strong id="stat-revenue">₹0</strong><small>from won deals</small></div>
+          </div>
+          <div class="overview-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Intent mix</h3>
+                <button class="button small secondary" type="button" id="bot-run">Run bot review</button>
+              </div>
+              <div id="intent-list" class="bar-list"><p class="muted">Loading…</p></div>
+              <p class="fine-print" id="bot-status">The bot flags hot leads and stale follow-ups. It writes records, never sends messages.</p>
+            </div>
+            <div class="panel">
+              <h3>Learning weights</h3>
+              <p class="muted">Adjusted automatically when you record a won or lost outcome.</p>
+              <div id="weight-list" class="weight-list"><p class="muted">Loading…</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-leads" class="tab-panel" hidden>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Lead list</h3>
+                <p class="muted" id="lead-count">0 leads</p>
+              </div>
+              <div class="toolbar">
+                <input id="lead-search" type="search" placeholder="Search name, business, intent…" aria-label="Search leads">
+                <button class="button small secondary" type="button" id="leads-refresh">Refresh</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Lead</th><th>Intent</th><th>Score</th><th>Status</th><th>Source</th><th>Created</th></tr></thead>
+                <tbody id="leads-body"><tr><td colspan="6" class="muted">Loading…</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="lead-detail" class="panel detail-panel" hidden>
+            <div class="panel-head">
+              <div>
+                <span class="eyebrow">Lead detail</span>
+                <h3 id="detail-name">—</h3>
+              </div>
+              <button class="button small ghost" type="button" id="detail-close">Close</button>
+            </div>
+            <p class="muted" id="detail-meta">—</p>
+            <div class="detail-grid">
+              <label>Status
+                <select id="detail-status">
+                  <option value="new">New</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="qualified">Qualified</option>
+                  <option value="won">Won</option>
+                  <option value="lost">Lost</option>
+                </select>
+              </label>
+              <label>Next action
+                <input id="detail-action" type="text" maxlength="200">
+              </label>
+            </div>
+            <label>Internal note
+              <textarea id="detail-note" rows="3" maxlength="2000" placeholder="Short note for your team"></textarea>
+            </label>
+            <div class="detail-actions">
+              <button class="button secondary" type="button" id="detail-save">Save changes</button>
+              <button class="button primary" type="button" id="detail-won">Mark won</button>
+              <button class="button danger" type="button" id="detail-lost">Mark lost</button>
+            </div>
+            <div class="outcome-row">
+              <label>Deal value (₹)<input id="detail-revenue" type="number" min="0" step="1000" value="0"></label>
+              <p class="fine-print">Recording an outcome updates the self-learning weights.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-activity" class="tab-panel" hidden>
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <h3>Activity timeline</h3>
+                <p class="muted" id="activity-count">0 records</p>
+              </div>
+              <button class="button small secondary" type="button" id="activity-refresh">Refresh</button>
+            </div>
+            <div id="activity-list" class="timeline"><p class="muted">Loading…</p></div>
+          </div>
+        </div>
+
+        <div id="tab-models" class="tab-panel" hidden>
+          <div class="model-grid">
+            <form id="model-form" class="panel">
+              <span class="eyebrow">Model adapter</span>
+              <h3>Test an extraction model</h3>
+              <p class="muted">Rules work offline. Start the local bridge for Ollama, or paste your own cloud key for one request only. Keys are never stored.</p>
+              <label>Enquiry message
+                <textarea id="model-message" rows="5" required placeholder="Paste a message to extract lead fields from."></textarea>
+              </label>
+              <label>Provider
+                <select id="model-provider">
+                  <option value="rules">Rules engine (offline)</option>
+                  <option value="local">Local model bridge (Ollama)</option>
+                  <option value="cloud">Cloud model (BYOK)</option>
+                </select>
+              </label>
+              <div id="cloud-fields" hidden>
+                <label>OpenAI-compatible endpoint
+                  <input id="model-url" type="url" placeholder="https://api.example.com/v1">
+                </label>
+                <label>Model name
+                  <input id="model-name" type="text" placeholder="e.g. llama-3.1-8b-instant">
+                </label>
+                <label>API key
+                  <input id="model-key" type="password" autocomplete="off" placeholder="Your own key">
+                </label>
+              </div>
+              <div id="local-fields" hidden>
+                <label>Local model
+                  <input id="local-model" type="text" value="llama3.2">
+                </label>
+                <p class="fine-print">Run <code>npm run bridge</code> on your machine. Bridge listens on 127.0.0.1:8789 only.</p>
+              </div>
+              <button class="button primary wide" type="submit">Extract lead</button>
+            </form>
+            <div class="panel">
+              <span class="eyebrow">Output</span>
+              <h3>Extraction result</h3>
+              <pre id="model-output" class="json-output">Run an extraction to see the structured lead.</pre>
+              <div class="model-note">
+                <strong>Privacy by design</strong>
+                <p>Cloud requests send a redacted message directly to the endpoint you choose. The key is used for that request and is never written to D1, logs, or source files.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section soft">
+      <div class="about-grid">
+        <div>
+          <span class="eyebrow">About the project</span>
+          <h2>Built to be opened, forked, and improved.</h2>
+          <p>BizIQ is an open-source demo by Krishna Prakash Ojha (Leon) at OmegaAPI. It uses Cloudflare Pages and D1, a signed three-day preview lock, and no payment layer. You can clone it and run your own instance for free.</p>
+          <div class="about-links">
+            <a class="button primary" href="https://github.com/omegaapi-india/biziq-ai-crm" target="_blank" rel="noreferrer">View source</a>
+            <a class="button ghost" href="mailto:info@omegaapi.com">Email OmegaAPI</a>
+            <a class="button ghost" href="https://t.me/Omegaapiofficial" target="_blank" rel="noreferrer">Telegram</a>
+          </div>
+        </div>
+        <div class="panel about-card">
+          <h3>What is included</h3>
+          <ul>
+            <li>Automatic lead capture from plain text</li>
+            <li>Transparent scoring with self-adjusting weights</li>
+            <li>Bot activity recorder and pipeline review</li>
+            <li>Four business calculators</li>
+            <li>Local Ollama bridge, cloud BYOK adapter</li>
+            <li>Full D1 backend with signed admin sessions</li>
+          </ul>
+          <p class="fine-print">MIT licensed. No payment or billing code is included in this repository.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 OmegaAPI · Krishna Prakash Ojha (Leon)</span>
+    <span>Open source · Privacy-safe · No payment layer</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

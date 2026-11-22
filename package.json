@@ -1,0 +1,19 @@
+{
+  "name": "biziq-ai-crm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Open-source AI lead capture CRM with adaptive scoring, bot activity recording, local Ollama, and optional BYOK cloud models.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "wrangler pages dev . --port 8790",
+    "bridge": "node bridge/ollama-bridge.js",
+    "test": "node --test tests/*.test.js",
+    "deploy": "wrangler pages deploy . --project-name biziq --branch main"
+  },
+  "devDependencies": {
+    "wrangler": "4.166.0"
+  }
+}
