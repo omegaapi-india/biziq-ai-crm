@@ -237,7 +237,7 @@ Contact is limited to those two channels. No personal phone number or chat handl
 
 If BizIQ helps you qualify enquiries or demonstrate a working CRM, please consider sponsoring OmegaAPI. It keeps the live demo online and lets me keep building free, open-source tools.
 
-[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-%E2%9D%A4-db61a2?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/omegaapi-india)
+[![Sponsor OmegaAPI](https://img.shields.io/badge/Sponsor-%E2%9D%A4-db61a2?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/omegaapi-india)
 
 Goal: **10 monthly sponsors**. [View monthly tiers ($5, $25, $100, $250)](https://github.com/sponsors/omegaapi-india?interval=monthly). Every monthly sponsor helps. Can't sponsor? A ⭐ on this repo or sharing it with someone who needs it helps too!
 
