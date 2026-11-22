@@ -1117,3 +1117,34 @@ tbody tr:hover {
     width: 100%;
   }
 }
+
+/* GitHub Sponsors */
+.button.sponsor {
+  border-color: transparent;
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+  color: #1b0713;
+}
+
+.button.sponsor:hover {
+  filter: brightness(1.08);
+}
+
+.sponsor-note {
+  margin: -8px 0 0;
+  color: #728ba1;
+  font-size: 0.8rem;
+}
+
+.sponsor-note strong {
+  color: #fbcfe8;
+}
+
+.sponsor-note a {
+  color: #f9a8d4;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sponsor-note a:hover {
+  text-decoration: underline;
+}
